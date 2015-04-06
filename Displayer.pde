@@ -4,6 +4,7 @@ public class Displayer
 {
 	
 	Button setButton;
+	DrodownList ddl;
 	Numberbox[] nbb_dig;
 	Numberbox[] nbb_ana;
 	InputBlock[] inputBlocks;
@@ -19,6 +20,8 @@ public class Displayer
 
 	public Displayer (PApplet dad, ControlP5 cp5, ArduinoCOM arduino)
 	{
+		addTabs(cp5);
+
 		addSetButton(cp5);
 		
 		addInputBlocks(cp5);
@@ -28,6 +31,26 @@ public class Displayer
 		addDigNumberbox(cp5);
 
 		addJanelaAquisicao(cp5);
+
+
+	}
+
+	private void addTabs(ControlP5 cp5)
+	{
+		cp5.getTab("default")
+		.setLabel("feedback")
+		.activateEvent(true)
+		.setId(0)
+		;
+
+		cp5.addTab("portas")
+		.activateEvent(true)
+		.setColorBackground(123)
+		.setColorLabel(color(255))
+		.setColorActive(color(255,126,0))
+		.bringToFront()
+		.setId(1)
+		;
 	}
 
 	private void addSetButton(ControlP5 cp5)
@@ -70,7 +93,7 @@ public class Displayer
 		//cria um bloco de controle de enrada para configurar cada saida digital
 		for (int i = 0; i < len; ++i) 
 		{
-			inputBlocks[i] = new InputBlock(cp5, vet[i], 5 + i*ajusteX_tfd, 15 );
+			inputBlocks[i] = new InputBlock(cp5, vet[i], 5 + i*ajusteX_tfd, 20 );
 		}
 	}
 
@@ -117,4 +140,6 @@ public class Displayer
 			nbb_dig[i] = (Numberbox) cp5.getController(name);
 		}
 	}
+
+	
 }

@@ -5,11 +5,15 @@ Writer writer;
 ArduinoCOM arduino;
 Displayer displayer;
 
+boolean b = false;
+
 void setup()
 {
 	size(800, 600);
 	
 	cp5 = new ControlP5(this);
+
+
 	writer = new Writer(this);
 	arduino = new ArduinoCOM(this);
 	displayer = new Displayer(this, cp5, arduino);
@@ -31,8 +35,14 @@ void pos()
 
 
 //os metodos acessados pelo listner devem ficar fora da classe
-public void controlEvent(ControlEvent theEvent)
+public void controlEvent(ControlEvent evento)
 {
 	//escolher qual metodo chamar baseado no nome do controlador que gerou o evento
-	println(theEvent.getController().getName());
+	//println(theEvent.getController().getName());
+
+	if(evento.isTab())
+	{
+		Tab temp = evento.getTab();
+		//println("tab: " + temp.getName() + " id: " + temp.getId());
+	}
 }
