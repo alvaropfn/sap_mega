@@ -17,6 +17,7 @@ void setup()
 	writer = new Writer(this);
 	arduino = new ArduinoCOM(this);
 	displayer = new Displayer(this, cp5, arduino);
+	displayer.encherDDL(arduino.getListaPortas());
 	//arduino.tentarInstancia("avrdude: ser_open(): can't open device "/dev/ttyACM0": Permission denied");
 
 }
@@ -24,7 +25,7 @@ void setup()
 void draw()
 {
 	background(234);
-	pos();
+	//pos();
 }
 
 void pos()
@@ -39,10 +40,11 @@ public void controlEvent(ControlEvent evento)
 {
 	//escolher qual metodo chamar baseado no nome do controlador que gerou o evento
 	//println(theEvent.getController().getName());
-
-	if(evento.isTab())
+	//if(!evento.isTab()) return;
+	if(evento.isTab() && evento.getTab().getId() == 1)
 	{
 		Tab temp = evento.getTab();
 		//println("tab: " + temp.getName() + " id: " + temp.getId());
+		displayer.encherDDL(arduino.getListaPortas());
 	}
 }

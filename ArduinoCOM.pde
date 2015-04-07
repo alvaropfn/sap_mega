@@ -172,17 +172,10 @@ public class ArduinoCOM
 	public int[] getEntradasDig()
 	{return this.entrada_dig;}
 
-	public int[] get3Ana()
+	public String[] getListaPortas()
 	{
-		if(!conectado) return null;
-
-		int len = 3;
-		int[] temp = new int[len];
-		for (int i = 0; i < len; ++i)
-		{
-			temp[i] = arduino.analogRead(entrada_ana[i]);
-		}
-		return temp;
+		//println(Arduino.list());
+		return Arduino.list();
 	}
 
 }

@@ -56,7 +56,6 @@ public class Writer {
                 out.println(s);    
             }
             out.close();
-            out.close();
         }
         catch (IOException e)
         {
