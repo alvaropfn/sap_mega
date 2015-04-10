@@ -26,7 +26,7 @@ public class Writer {
         File f = new File(dad.dataPath(name));
         if (!f.exists())
         {
-             createFile(f);
+            createFile(f);
         }
         try
         {
@@ -46,7 +46,7 @@ public class Writer {
         File f = new File(dad.dataPath(name));
         if (!f.exists())
         {
-             createFile(f);
+            createFile(f);
         }
         try
         {

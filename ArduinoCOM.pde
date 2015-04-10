@@ -173,10 +173,7 @@ public class ArduinoCOM
 	{return this.entrada_dig;}
 
 	public String[] getListaPortas()
-	{
-		//println(Arduino.list());
-		return Arduino.list();
-	}
+	{return Arduino.list();}
 
 }
 

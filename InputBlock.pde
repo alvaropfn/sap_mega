@@ -37,7 +37,7 @@ public class InputBlock
 			.setPosition(inicioX, inicioY)
 			.setSize(btnLado, btnLado)
 			.setColorBackground(color(0,0,0))
-			//.setColor(color(255,255,255))
+			//.setColor(color(255,0,0))
 			.getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER)
 			;
 		
@@ -55,6 +55,8 @@ public class InputBlock
 			.setColorForeground(color(255,255,150))
 			.setColorValue(color(0,255,0))
 			.setDecimalPrecision(0).setDecimalPrecision(0)
+			.lock()
+			//.setId(pin)
 			;
 		nbb = (Numberbox) cp5.getController("n"+pin);
 	}
@@ -82,8 +84,10 @@ public class InputBlock
 				.setPosition(inix +cl*(ajusteTF+ larguraTFD), inicioY + ln*(alturaNBB_TFD +alturaNBB_TFD))
 				.setSize(larguraTFD,alturaNBB_TFD)
 				.setAutoClear(false)
+				.setColor(255)
 				.setColorForeground(color(0,0,0))
 				.setColorCaptionLabel(color(0,0,0))
+				//.setInputFilter().valueOf(INTEGER) 
 				;
 				tfd[ln][cl] = (Textfield) cp5.getController(name);
 			}

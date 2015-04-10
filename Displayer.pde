@@ -18,17 +18,17 @@ public class Displayer
 	private final int ajusteX_nbb = 50;
 	private final int ajusteY_nbb = 55;
 
-	public Displayer (PApplet dad, ControlP5 cp5, ArduinoCOM arduino)
+	public Displayer (ControlP5 cp5, ArduinoCOM arduinoCom)
 	{
 		addTabs(cp5);
 
 		addSetButton(cp5);
 		
-		addInputBlocks(cp5);
+		addInputBlocks(cp5, arduinoCom);
 
-		addAnaNumberbox(cp5);
+		addAnaNumberbox(cp5, arduinoCom);
 
-		addDigNumberbox(cp5);
+		addDigNumberbox(cp5, arduinoCom);
 
 		addJanelaAquisicao(cp5);
 
@@ -83,11 +83,11 @@ public class Displayer
 		janelaAquisicao = (Numberbox) cp5.getController("janelaAquisicao");
 	}
 
-	private void addInputBlocks(ControlP5 cp5)
+	private void addInputBlocks(ControlP5 cp5, ArduinoCOM arduinoCom)
 	{
 
 
-		vet = arduino.getSaidasDig();
+		vet = arduinoCom.getSaidasDig();
 		len = vet.length;
 		
 		inputBlocks = new InputBlock[len];
@@ -99,9 +99,9 @@ public class Displayer
 		}
 	}
 
-	private void addAnaNumberbox(ControlP5 cp5)
+	private void addAnaNumberbox(ControlP5 cp5, ArduinoCOM arduinoCom)
 	{
-		vet = arduino.getEntradasAna();
+		vet = arduinoCom.getEntradasAna();
 		len = vet.length;
 		nbb_ana = new Numberbox[len];
 		//cria um numberbox para cada uma das portas analogicas
@@ -116,14 +116,15 @@ public class Displayer
 			.setColorLabel(color(0,0,255))
 			.setColorForeground(color(255,255,150))
 			.setColorValue(color(0,255,0))
+			//.setId(-vet[i])
 			;
 			//nbb_ana[i] = (Numberbox) cp5.getController(name);
 		}
 	}
 
-	private void addDigNumberbox(ControlP5 cp5)
+	private void addDigNumberbox(ControlP5 cp5, ArduinoCOM arduinoCom)
 	{
-		vet = arduino.getEntradasDig();
+		vet = arduinoCom.getEntradasDig();
 		len = vet.length;
 		nbb_dig = new Numberbox[len];
 		//cria um numberbox para cada uma das portas digitais
@@ -138,6 +139,8 @@ public class Displayer
 			.setColorLabel(color(0,0,255))
 			.setColorForeground(color(255,255,150))
 			.setColorValue(color(0,255,0))
+			.lock()
+			//.setId(vet[i])
 			;
 			//nbb_dig[i] = (Numberbox) cp5.getController(name);
 		}
@@ -166,13 +169,10 @@ public class Displayer
 	{
 		ddl.clear();
 		int i = 0;
-		ddl.addItems(lista);
 		println("comunicacao interrompida");
-		/*for (String s : lista) {
-			ddl.addItem(s,i);
-			//println(s);
-			i++;
-		}*/
+		ddl.addItems(lista);
+		
+		
 	}
 	
 }

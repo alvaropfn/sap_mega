@@ -2,7 +2,7 @@ import controlP5.*;
 ControlP5 cp5;
 
 Writer writer;
-ArduinoCOM arduino;
+ArduinoCOM arduinoCom;
 Displayer displayer;
 
 boolean b = false;
@@ -15,9 +15,9 @@ void setup()
 
 
 	writer = new Writer(this);
-	arduino = new ArduinoCOM(this);
-	displayer = new Displayer(this, cp5, arduino);
-	displayer.encherDDL(arduino.getListaPortas());
+	arduinoCom = new ArduinoCOM(this);
+	displayer = new Displayer(cp5, arduinoCom);
+	displayer.encherDDL(arduinoCom.getListaPortas());
 	//arduino.tentarInstancia("avrdude: ser_open(): can't open device "/dev/ttyACM0": Permission denied");
 
 }
@@ -41,10 +41,13 @@ public void controlEvent(ControlEvent evento)
 	//escolher qual metodo chamar baseado no nome do controlador que gerou o evento
 	//println(theEvent.getController().getName());
 	//if(!evento.isTab()) return;
+	String s = evento.getController().getName();
+	s += " id: " + evento.getController().getId();
+	println(s);
 	if(evento.isTab() && evento.getTab().getId() == 1)
 	{
 		Tab temp = evento.getTab();
 		//println("tab: " + temp.getName() + " id: " + temp.getId());
-		displayer.encherDDL(arduino.getListaPortas());
+		displayer.encherDDL(arduinoCom.getListaPortas());
 	}
 }
