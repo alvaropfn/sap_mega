@@ -4,8 +4,7 @@ ControlP5 cp5;
 Writer writer;
 ArduinoCOM arduinoCom;
 Displayer displayer;
-
-boolean b = false;
+int seg, nxt;
 
 void setup()
 {
@@ -19,12 +18,25 @@ void setup()
 	displayer = new Displayer(cp5, arduinoCom);
 	displayer.encherDDL(arduinoCom.getListaPortas());
 	//arduino.tentarInstancia("avrdude: ser_open(): can't open device "/dev/ttyACM0": Permission denied");
+	seg = second();
 
 }
 
 void draw()
 {
 	background(234);
+
+	nxt = second();
+	if(seg != nxt)
+	{
+		seg = nxt;
+
+		if(arduinoCom.isConectado())
+		{
+
+		}
+
+	}
 	//pos();
 }
 
@@ -38,16 +50,49 @@ void pos()
 //os metodos acessados pelo listner devem ficar fora da classe
 public void controlEvent(ControlEvent evento)
 {
-	//escolher qual metodo chamar baseado no nome do controlador que gerou o evento
-	//println(theEvent.getController().getName());
-	//if(!evento.isTab()) return;
-	String s = evento.getController().getName();
-	s += " id: " + evento.getController().getId();
-	println(s);
+	/*
 	if(evento.isTab() && evento.getTab().getId() == 1)
 	{
 		Tab temp = evento.getTab();
 		//println("tab: " + temp.getName() + " id: " + temp.getId());
 		displayer.encherDDL(arduinoCom.getListaPortas());
 	}
+	*/
+	//hapens with tabs
+	if(evento.isTab())
+	{
+		println("tab: " + evento.getName());
+		int id = evento.getTab().getId();
+		
+		if(id == 0)
+		{
+			println("id: "+id);
+		}
+
+		if(id == 1)
+		{
+			println("id: "+id);
+		}
+	}
+
+	//hapens with dropdownlist
+	if(evento.isGroup())
+	{
+		println("grupo: " + evento.getName());
+
+		if(evento.getId() == 30)
+		{
+			DropdownList temp = (DropdownList) evento.getGroup(); 
+			int index = (int) evento.getGroup().getValue();
+			String porta = temp.getItem(index).getText();
+			arduinoCom.tentarInstancia(porta);
+		}
+	}
+
+	//hapens with textfields, buttons and numberboxs
+	if(evento.isController())
+	{
+		println("controlador: " + evento.getName());
+	}
+
 }

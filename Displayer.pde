@@ -50,7 +50,7 @@ public class Displayer
 		.setColorBackground(123)
 		.setColorLabel(color(255))
 		.setColorActive(color(255,126,0))
-		.bringToFront()
+		//.bringToFront()
 		.setId(1)
 		;
 	}
@@ -63,6 +63,7 @@ public class Displayer
 		.setColorBackground(color(255,0,0))
 		.getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER)
 		.setColor(color(255,255,255))
+		//.setId(10)
 		;
 		setButton = (Button) cp5.getController("set");
 	}
@@ -78,6 +79,7 @@ public class Displayer
 		.setLabel("tamanho da Janela")
 		.setColorLabel(color(0,0,0))
 		.getCaptionLabel().align(ControlP5.LEFT, ControlP5.BOTTOM_OUTSIDE)
+		//.setId(20)
 		;
 
 		janelaAquisicao = (Numberbox) cp5.getController("janelaAquisicao");
@@ -116,7 +118,8 @@ public class Displayer
 			.setColorLabel(color(0,0,255))
 			.setColorForeground(color(255,255,150))
 			.setColorValue(color(0,255,0))
-			//.setId(-vet[i])
+			.lock()
+			.setId(1000 + vet[i])
 			;
 			//nbb_ana[i] = (Numberbox) cp5.getController(name);
 		}
@@ -140,7 +143,7 @@ public class Displayer
 			.setColorForeground(color(255,255,150))
 			.setColorValue(color(0,255,0))
 			.lock()
-			//.setId(vet[i])
+			.setId(2000 + vet[i])
 			;
 			//nbb_dig[i] = (Numberbox) cp5.getController(name);
 		}
@@ -159,7 +162,7 @@ public class Displayer
 		.setCaptionLabel("lista de portas")
 		.setColorBackground(color(60))
 		.setColorActive(color(255, 128))
-		
+		.setId(30)
 		;
 		ddl.getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
 		//ddl = (DropdownList) cp5.getController("listaPortas");
@@ -169,10 +172,8 @@ public class Displayer
 	{
 		ddl.clear();
 		int i = 0;
-		println("comunicacao interrompida");
 		ddl.addItems(lista);
-		
-		
+
 	}
 	
 }

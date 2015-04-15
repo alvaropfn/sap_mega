@@ -38,6 +38,7 @@ public class InputBlock
 			.setSize(btnLado, btnLado)
 			.setColorBackground(color(0,0,0))
 			//.setColor(color(255,0,0))
+			.setId(100 + pin)
 			.getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER)
 			;
 		
@@ -85,6 +86,7 @@ public class InputBlock
 				.setSize(larguraTFD,alturaNBB_TFD)
 				.setAutoClear(false)
 				.setColor(255)
+				.setColorCursor(color(255,0,0))
 				.setColorForeground(color(0,0,0))
 				.setColorCaptionLabel(color(0,0,0))
 				//.setInputFilter().valueOf(INTEGER) 
@@ -94,5 +96,10 @@ public class InputBlock
 		}
 	}
 
+	public Textfield[] getHMS_claro()
+	{return this.tfd[0];}
+
+	public Textfield[] getHMS_escuro()
+	{return this.tfd[1];}
 	
 }
