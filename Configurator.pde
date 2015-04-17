@@ -32,7 +32,12 @@ public class Configurator
 		String temp[] = new String[]
 		{
 			"null",
-			"true, true, true, false, true, true, true"
+      "true, 6, 0, 0, 18, 0, 0",
+      "true, 6, 0, 0, 18, 0, 0",
+      "true, 6, 0, 0, 18, 0, 0",
+      "true, 6, 0, 0, 18, 0, 0",
+      "true, 6, 0, 0, 18, 0, 0",
+      "true, 6, 0, 0, 18, 0, 0",
 		};
 
 		return temp;

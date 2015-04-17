@@ -4,8 +4,10 @@ ControlP5 cp5;
 Writer writer;
 ArduinoCOM arduinoCom;
 Displayer displayer;
-int seg, nxt;
+ClockMaster relogio;
 
+int seg, nxt;
+int val = 0;
 void setup()
 {
 	size(800, 600);
@@ -17,8 +19,9 @@ void setup()
 	arduinoCom = new ArduinoCOM(this);
 	displayer = new Displayer(cp5, arduinoCom);
 	displayer.encherDDL(arduinoCom.getListaPortas());
+	relogio = new ClockMaster();
+
 	//arduino.tentarInstancia("avrdude: ser_open(): can't open device "/dev/ttyACM0": Permission denied");
-	seg = second();
 
 }
 
@@ -26,18 +29,13 @@ void draw()
 {
 	background(234);
 
-	nxt = second();
-	if(seg != nxt)
+	if(arduinoCom.isConectado())
 	{
-		seg = nxt;
-
-		if(arduinoCom.isConectado())
-		{
-
-		}
-
+		
+		relogio.cicle();	
 	}
 	//pos();
+	
 }
 
 void pos()

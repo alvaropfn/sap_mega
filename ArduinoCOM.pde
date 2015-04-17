@@ -32,21 +32,28 @@ public class ArduinoCOM
 	//tenta inicializar a instancia de um arduino
 	public boolean tentarInstancia(String serial)
 	{
-		this.conectado = false;
+		try
+		{
+			//arduino.stop();
+		}
+		catch (Exception e){println(e.getMessage());}
+		finally{this.conectado = false;}
 
 		try
 		{
 			arduino = new Arduino(dad, serial, 57600);
-			delay(1800);
-			definirModosPortas();
-			println("conexao com: " + serial + " bem sucedida");
-			this.conectado = true;
 			
+			delay(2000);
+			
+			try { definirModosPortas(); }
+			catch (Exception e) { println(e.getMessage()); }
+			
+			println("conexao com: " + serial + " bem sucedida");
+			this.conectado = true;		
 		}
-		catch (Exception e)
-		{
-			println(e.getMessage());
-		}
+
+		catch (Exception e){println(e.getMessage());}
+		
 		finally
 		{
 			if(conectado) this.COM = serial;
@@ -184,5 +191,15 @@ public class ArduinoCOM
 
 	public String getCOM()
 	{return this.COM;}
+
+	public void debug()
+	{
+		arduino.pinMode(13,Arduino.OUTPUT);
+	}
+	public void debug(int val)
+	{
+		arduino.digitalWrite(13,val);
+	}
+	
 }
 
