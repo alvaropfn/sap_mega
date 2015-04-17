@@ -1,13 +1,12 @@
 import controlP5.*;
 ControlP5 cp5;
 
-Writer writer;
+Writer escritor;
 ArduinoCOM arduinoCom;
 Displayer displayer;
 ClockMaster relogio;
-
+Configurator configurador;
 int seg, nxt;
-int val = 0;
 void setup()
 {
 	size(800, 600);
@@ -15,7 +14,8 @@ void setup()
 	cp5 = new ControlP5(this);
 
 
-	writer = new Writer(this);
+	escritor = new Writer(this);
+	configurador = new Configurator(escritor);
 	arduinoCom = new ArduinoCOM(this);
 	displayer = new Displayer(cp5, arduinoCom);
 	displayer.encherDDL(arduinoCom.getListaPortas());
@@ -32,7 +32,8 @@ void draw()
 	if(arduinoCom.isConectado())
 	{
 		
-		relogio.cicle();	
+		relogio.cicle();
+
 	}
 	//pos();
 	

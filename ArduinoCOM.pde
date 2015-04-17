@@ -43,7 +43,7 @@ public class ArduinoCOM
 		{
 			arduino = new Arduino(dad, serial, 57600);
 			
-			delay(2000);
+			//delay(2000);
 			
 			try { definirModosPortas(); }
 			catch (Exception e) { println(e.getMessage()); }

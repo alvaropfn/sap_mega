@@ -7,7 +7,7 @@ public class InputBlock
 	
 	Button btn;
 	Numberbox nbb;
-	Textfield tfd[][];
+	Textfield tfdBlock[][];
 	
 	final int ajusteTF = 5;
 	final int ajusteGeral = 4;
@@ -64,17 +64,19 @@ public class InputBlock
 
 	private void gerarTextfields(ControlP5 cp5)
 	{
-		tfd = new Textfield[3][3];
-		int lin = 3;
+		int lin = 2;
 		int col = 3;
+		tfdBlock = new Textfield[lin][col];
+		
 
 		//apenas para faciliar o deslocaento inicial em X
 		int inix = inicioX + btnLado+ ajusteGeral;
 
 		String[] s1 = {"hc","mc","sc"};
 		String[] s2 = {"he","me","se"};
-		String[] s3 = {"ht","mt","st"};
-		String[][] tfdName ={s1,s2,s3};
+		//String[] s3 = {"ht","mt","st"};
+		//String[][] tfdName ={s1,s2,s3};
+		String[][] tfdName ={s1,s2};
 
 		for (int ln = 0; ln < lin; ++ln)
 		{
@@ -91,15 +93,22 @@ public class InputBlock
 				.setColorCaptionLabel(color(0,0,0))
 				//.setInputFilter().valueOf(INTEGER) 
 				;
-				tfd[ln][cl] = (Textfield) cp5.getController(name);
+				
+				tfdBlock[ln][cl] = (Textfield) cp5.getController(name);
 			}
 		}
 	}
 
-	public Textfield[] getHMS_claro()
-	{return this.tfd[0];}
-
-	public Textfield[] getHMS_escuro()
-	{return this.tfd[1];}
+	/*retorna um array com os inteiros hora minuto e segundo do inicio
+	* 0 = claro
+	* 1 = escuro
+	*/
+	public int[] getHMS(int index)
+	{
+		int hr = Integer.parseInt(this.tfdBlock[index][0].getText());
+		int min = Integer.parseInt(this.tfdBlock[index][1].getText());
+		int seg = Integer.parseInt(this.tfdBlock[index][2].getText());
+		return new int[] {hr, min, seg};
+	}
 	
 }
