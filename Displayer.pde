@@ -168,12 +168,48 @@ public class Displayer
 		//ddl = (DropdownList) cp5.getController("listaPortas");
 	}
 
-	public void encherDDL(String[] lista)
+	private void encherDDL(String[] lista)
 	{
 		ddl.clear();
 		int i = 0;
 		ddl.addItems(lista);
 
+	}
+
+	public void checarTabPotas(ArduinoCOM arduinoCom)
+	{
+		if(tabP.isActive())
+			encherDDL(arduinoCom.getListaPortas());
+	}
+
+	public void updateFeedbacksDig(int[] dado, int[] soma)
+	{
+		int i = 0;
+		for (Numberbox nbd : nbb_dig)
+		{
+			nbd.setValue(soma[i]);
+
+			if(dado[i] > 0)
+				nbd.setColorBackground(color(200,150,0));
+			else
+				nbd.setColorBackground(color(0,0,0));
+			i++;
+		}
+	}
+
+	public void updateFeedbacksAna(int[] dado, int[] soma)
+	{
+		int i = 0;
+		for (Numberbox nba : nbb_ana)
+		{
+			nba.setValue(soma[i]);
+
+			if(dado[i] > 300)
+				nba.setColorBackground(color(200,150,0));
+			else
+				nba.setColorBackground(color(0,0,0));
+			i++;
+		}
 	}
 	
 }

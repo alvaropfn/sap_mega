@@ -15,10 +15,12 @@ void setup()
 
 
 	escritor = new Writer(this);
+	
 	configurador = new Configurator(escritor);
+
 	arduinoCom = new ArduinoCOM(this);
 	displayer = new Displayer(cp5, arduinoCom);
-	displayer.encherDDL(arduinoCom.getListaPortas());
+	//displayer.encherDDL(arduinoCom.getListaPortas());
 	relogio = new ClockMaster();
 
 
@@ -29,12 +31,12 @@ void setup()
 void draw()
 {
 	background(234);
-
+	relogio.cicle(arduinoCom, displayer);
+	
 	if(arduinoCom.isConectado())
 	{
+		//realiza a comunicação	
 		
-		relogio.cicle();
-
 	}
 	//pos();
 	
@@ -78,7 +80,7 @@ public void controlEvent(ControlEvent evento)
 	//hapens with dropdownlist
 	if(evento.isGroup())
 	{
-		println("grupo: " + evento.getName());
+		//println("grupo: " + evento.getName());
 
 		if(evento.getId() == 30)
 		{
@@ -92,7 +94,7 @@ public void controlEvent(ControlEvent evento)
 	//hapens with textfields, buttons and numberboxs
 	if(evento.isController())
 	{
-		println("controlador: " + evento.getName());
+		//println("controlador: " + evento.getName());
 	}
 
 }
