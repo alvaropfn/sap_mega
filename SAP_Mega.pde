@@ -21,6 +21,7 @@ void setup()
 	displayer.encherDDL(arduinoCom.getListaPortas());
 	relogio = new ClockMaster();
 
+
 	//arduino.tentarInstancia("avrdude: ser_open(): can't open device "/dev/ttyACM0": Permission denied");
 
 }

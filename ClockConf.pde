@@ -2,16 +2,18 @@ import java.util.Calendar;
 
 public class ClockConf
 {
+	boolean claro;
 	Calendar inicioC, inicioE, inicioR;
 	int hrc, minc, segc;
 	int hre, mine, sege;
 
 	public ClockConf(int hrc, int minc, int segc, int hre, int mine, int sege)
 	{
-		loadConf(hrc, minc, segc, hre, mine, sege);
+		claro = false;
+		carregarConf(hrc, minc, segc, hre, mine, sege);
 	}
 
-	public void loadConf(int hrc, int minc, int segc, int hre, int mine, int sege)
+	public void carregarConf(int hrc, int minc, int segc, int hre, int mine, int sege)
 	{
 		this.hrc = hrc;
 		this.minc = minc;
@@ -22,7 +24,7 @@ public class ClockConf
 		this.sege = sege;
 	}
 
-	public void update()
+	public void atualizar()
 	{
 
 		inicioC = Calendar.getInstance();
@@ -41,6 +43,25 @@ public class ClockConf
 		inicioE.add(Calendar.HOUR_OF_DAY,24);
 	}
 
+	public boolean checar()
+	{
+		Calendar agora = Calendar.getInstance();
+		
+		if(agora.after(inicioC) &&  agora.before(inicioE))
+		{
+			this.claro = true;
+		}
+		else if (agora.after(inicioE) && agora.before(inicioR))
+		{
+			this.claro = false;
+		}
+		else
+		{
+			atualizar();
+			this.claro = checar();
+		}
+		return this.claro;
+	}
 
 
 }
