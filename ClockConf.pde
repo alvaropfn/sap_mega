@@ -24,6 +24,17 @@ public class ClockConf
 		this.sege = sege;
 	}
 
+	public void carregarConf(Configurator configurador, int index)
+	{
+		this.hrc = configurador.getHoraC(index);
+		this.minc = configurador.getMinC(index);
+		this.segc = configurador.getSegC(index);
+
+		this.hre = configurador.getHoraE(index);
+		this.mine = configurador.getMinE(index);
+		this.sege = configurador.getSegE(index);
+	}
+
 	public void atualizar()
 	{
 

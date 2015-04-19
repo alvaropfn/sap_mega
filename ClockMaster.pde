@@ -35,7 +35,7 @@ public class ClockMaster
 
 			displayer.updateFeedbacksAna
 			(
-				arduinoCom.leituraInternaAna(),
+				arduinoCom.leituraInternaAnaComoDig(),
 				arduinoCom.getDadosAna()
 			);
 

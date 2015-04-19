@@ -121,18 +121,19 @@ public class ArduinoCOM
 	}
 
 	//realiza a leitura de todas as portas digitais como se fossem analogicas
-	public void leituraInternaAnaComoDig()
+	public int[] leituraInternaAnaComoDig()
 	{
-		//não le nada em caso de falha na conexão
-		if(!conectado)return;
 
 		int len = qtd_entradas_ana;
+		int[] temp = new int[len];
+
 		for (int i = 0; i < len; ++i)
 		{
-			int temp = arduino.analogRead(entrada_dig[i]);
-			temp = temp > 300 ? 1 : 0;
-			dados_ana[i] += temp;
+			temp[i] = conectado ? arduino.analogRead(entrada_ana[i]) : 0;
+			temp[i] = temp[i] > 300 ? 1 : 0;
+			dados_ana[i] += temp[i];
 		}
+		return temp;
 	}
 
 	//realiza a leitura de todas as portas analogicas
@@ -144,7 +145,7 @@ public class ArduinoCOM
 		//for (int i : temp) {i = 0;}
 
 		for (int i = 0; i < len; ++i)
-		{println("ana--len: " + len + ", i: " + i);
+		{
 			temp[i] = conectado ? arduino.analogRead(entrada_ana[i]) : 0;
 			dados_ana[i] += temp[i];
 		}
@@ -160,7 +161,7 @@ public class ArduinoCOM
 		//for (int i : temp) {i = 0;}
 
 		for (int i = 0; i < len; ++i)
-		{println("dig--len: " + len + ", i: " + i);
+		{
 			temp[i] = conectado ? arduino.digitalRead(entrada_dig[i]) : 0;
 			dados_dig[i] += temp[i];
 		}

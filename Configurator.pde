@@ -150,4 +150,91 @@ public class Configurator
         return array;
     }
 
+    //entrada bloco SETs
+    public String getSerial()
+    {return this.serial;}
+
+    public int getJanelaAquisicao()
+    {return (int) janelaAquisicao;}
+
+    public boolean getSaida(int index)
+    {return saida[index];}
+
+    public int getHoraC(int index)
+    {return this.horaC[index];}
+
+    public int getMinC(int index)
+    {return this.minC[index];}
+
+    public int getSegC(int index)
+    {return this.segC[index];}
+
+    public int getHoraE(int index)
+    {return this.horaE[index];}
+
+    public int getMinE(int index)
+    {return this.minE[index];}
+
+    public int getSegE(int index)
+    {return this.segE[index];}
+    //saida bloco SETs
+
+    //################################
+
+    //entrada bloco GETs
+    public void setSerial(String var)
+    {this.serial = var;}
+
+    public void setJanelaAquisicao(int var)
+    {this.janelaAquisicao = var;}
+
+    public void setSaidas(boolean[] var)
+    {
+        int len = saida.length;
+        for (int i = 0; i < len; ++i)
+            this.saida[i] = var[i];
+    }
+
+    public void setHoraC(int[] var)
+    {
+        int len = horaC.length;
+        for (int i = 0; i < len; ++i)
+            this.horaC[i] = var[i];
+    }
+
+    public void setMinC(int[] var)
+    {
+        int len = minC.length;
+        for (int i = 0; i < len; ++i)
+            this.minC[i] = var[i];
+    }
+
+    public void setSegC(int[] var)
+    {
+        int len = segC.length;
+        for (int i = 0; i < len; ++i)
+            this.segC[i] = var[i];
+    }
+
+    public void setHoraE(int[] var)
+    {
+        int len = horaE.length;
+        for (int i = 0; i < len; ++i)
+            this.horaE[i] = var[i];
+    }
+
+    public void setMinE(int[] var)
+    {
+        int len = minE.length;
+        for (int i = 0; i < len; ++i)
+            this.minE[i] = var[i];
+    }
+
+    public void setSegE(int[] var)
+    {
+        int len = segE.length;
+        for (int i = 0; i < len; ++i)
+            this.segE[i] = var[i];
+    }
+    //saida bloco GETs
 }

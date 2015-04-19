@@ -2,23 +2,23 @@ import controlP5.*;
 
 public class InputBlock
 {
-	PApplet dad;
-	ControlP5 cp5;
+	private PApplet dad;
+	private ControlP5 cp5;
 	
-	Button btn;
-	Numberbox nbb;
-	Textfield tfdBlock[][];
+	private Button btn;
+	private Numberbox nbb;
+	private Textfield tfdBlock[][];
 	
-	final int ajusteTF = 5;
-	final int ajusteGeral = 4;
+	private final int ajusteTF = 5;
+	private final int ajusteGeral = 4;
 
-	final int btnLado = 35;
-	final int larguraTFD = 20;
-	final int alturaNBB_TFD = 15;
+	private final int btnLado = 35;
+	private final int larguraTFD = 20;
+	private final int alturaNBB_TFD = 15;
 
-	int inicioX;
-	int inicioY;
-	int pin;
+	private int inicioX;
+	private int inicioY;
+	private int pin;
 
 	public InputBlock (ControlP5 cp5, int pin, int inicioX, int inicioY )
 	{
@@ -111,4 +111,16 @@ public class InputBlock
 		return new int[] {hr, min, seg};
 	}
 	
+	/*salva a hora minuto e segundo de interesse
+	* 0 = claro
+	* 1 = escuro
+	*/
+	public void setHMS(int index, int[] hms)
+	{
+		int len = tfdBlock[index].length;
+		for (int i = 0; i < len; ++i)
+		{
+			tfdBlock[index][i].setText("" + hms[i]);
+		}
+	}
 }
