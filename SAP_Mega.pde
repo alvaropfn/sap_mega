@@ -1,12 +1,12 @@
 import controlP5.*;
 ControlP5 cp5;
 
-Writer writer;
-ArduinoCOM arduino;
+Writer escritor;
+ArduinoCOM arduinoCom;
 Displayer displayer;
-
-boolean b = false;
-
+ClockMaster relogio;
+Configurator configurador;
+int seg, nxt;
 void setup()
 {
 	size(800, 600);
@@ -14,10 +14,16 @@ void setup()
 	cp5 = new ControlP5(this);
 
 
-	writer = new Writer(this);
-	arduino = new ArduinoCOM(this);
-	displayer = new Displayer(this, cp5, arduino);
-	displayer.encherDDL(arduino.getListaPortas());
+	escritor = new Writer(this);
+	
+	configurador = new Configurator(escritor);
+
+	arduinoCom = new ArduinoCOM(this);
+	displayer = new Displayer(cp5, arduinoCom);
+	//displayer.encherDDL(arduinoCom.getListaPortas());
+	relogio = new ClockMaster();
+
+
 	//arduino.tentarInstancia("avrdude: ser_open(): can't open device "/dev/ttyACM0": Permission denied");
 
 }
@@ -25,7 +31,15 @@ void setup()
 void draw()
 {
 	background(234);
+	relogio.cicle(arduinoCom, displayer);
+	
+	if(arduinoCom.isConectado())
+	{
+		//realiza a comunicação	
+		
+	}
 	//pos();
+	
 }
 
 void pos()
@@ -38,13 +52,49 @@ void pos()
 //os metodos acessados pelo listner devem ficar fora da classe
 public void controlEvent(ControlEvent evento)
 {
-	//escolher qual metodo chamar baseado no nome do controlador que gerou o evento
-	//println(theEvent.getController().getName());
-	//if(!evento.isTab()) return;
+	/*
 	if(evento.isTab() && evento.getTab().getId() == 1)
 	{
 		Tab temp = evento.getTab();
 		//println("tab: " + temp.getName() + " id: " + temp.getId());
-		displayer.encherDDL(arduino.getListaPortas());
+		displayer.encherDDL(arduinoCom.getListaPortas());
 	}
+	*/
+	//hapens with tabs
+	if(evento.isTab())
+	{
+		println("tab: " + evento.getName());
+		int id = evento.getTab().getId();
+		
+		if(id == 0)
+		{
+			println("id: "+id);
+		}
+
+		if(id == 1)
+		{
+			println("id: "+id);
+		}
+	}
+
+	//hapens with dropdownlist
+	if(evento.isGroup())
+	{
+		//println("grupo: " + evento.getName());
+
+		if(evento.getId() == 30)
+		{
+			DropdownList temp = (DropdownList) evento.getGroup(); 
+			int index = (int) evento.getGroup().getValue();
+			String porta = temp.getItem(index).getText();
+			arduinoCom.tentarInstancia(porta);
+		}
+	}
+
+	//hapens with textfields, buttons and numberboxs
+	if(evento.isController())
+	{
+		//println("controlador: " + evento.getName());
+	}
+
 }

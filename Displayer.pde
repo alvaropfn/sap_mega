@@ -18,17 +18,17 @@ public class Displayer
 	private final int ajusteX_nbb = 50;
 	private final int ajusteY_nbb = 55;
 
-	public Displayer (PApplet dad, ControlP5 cp5, ArduinoCOM arduino)
+	public Displayer (ControlP5 cp5, ArduinoCOM arduinoCom)
 	{
 		addTabs(cp5);
 
 		addSetButton(cp5);
 		
-		addInputBlocks(cp5);
+		addInputBlocks(cp5, arduinoCom);
 
-		addAnaNumberbox(cp5);
+		addAnaNumberbox(cp5, arduinoCom);
 
-		addDigNumberbox(cp5);
+		addDigNumberbox(cp5, arduinoCom);
 
 		addJanelaAquisicao(cp5);
 
@@ -50,7 +50,7 @@ public class Displayer
 		.setColorBackground(123)
 		.setColorLabel(color(255))
 		.setColorActive(color(255,126,0))
-		.bringToFront()
+		//.bringToFront()
 		.setId(1)
 		;
 	}
@@ -63,6 +63,7 @@ public class Displayer
 		.setColorBackground(color(255,0,0))
 		.getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER)
 		.setColor(color(255,255,255))
+		//.setId(10)
 		;
 		setButton = (Button) cp5.getController("set");
 	}
@@ -78,16 +79,17 @@ public class Displayer
 		.setLabel("tamanho da Janela")
 		.setColorLabel(color(0,0,0))
 		.getCaptionLabel().align(ControlP5.LEFT, ControlP5.BOTTOM_OUTSIDE)
+		//.setId(20)
 		;
 
 		janelaAquisicao = (Numberbox) cp5.getController("janelaAquisicao");
 	}
 
-	private void addInputBlocks(ControlP5 cp5)
+	private void addInputBlocks(ControlP5 cp5, ArduinoCOM arduinoCom)
 	{
 
 
-		vet = arduino.getSaidasDig();
+		vet = arduinoCom.getSaidasDig();
 		len = vet.length;
 		
 		inputBlocks = new InputBlock[len];
@@ -99,9 +101,9 @@ public class Displayer
 		}
 	}
 
-	private void addAnaNumberbox(ControlP5 cp5)
+	private void addAnaNumberbox(ControlP5 cp5, ArduinoCOM arduinoCom)
 	{
-		vet = arduino.getEntradasAna();
+		vet = arduinoCom.getEntradasAna();
 		len = vet.length;
 		nbb_ana = new Numberbox[len];
 		//cria um numberbox para cada uma das portas analogicas
@@ -116,14 +118,16 @@ public class Displayer
 			.setColorLabel(color(0,0,255))
 			.setColorForeground(color(255,255,150))
 			.setColorValue(color(0,255,0))
+			.lock()
+			.setId(1000 + vet[i])
 			;
 			//nbb_ana[i] = (Numberbox) cp5.getController(name);
 		}
 	}
 
-	private void addDigNumberbox(ControlP5 cp5)
+	private void addDigNumberbox(ControlP5 cp5, ArduinoCOM arduinoCom)
 	{
-		vet = arduino.getEntradasDig();
+		vet = arduinoCom.getEntradasDig();
 		len = vet.length;
 		nbb_dig = new Numberbox[len];
 		//cria um numberbox para cada uma das portas digitais
@@ -138,6 +142,8 @@ public class Displayer
 			.setColorLabel(color(0,0,255))
 			.setColorForeground(color(255,255,150))
 			.setColorValue(color(0,255,0))
+			.lock()
+			.setId(2000 + vet[i])
 			;
 			//nbb_dig[i] = (Numberbox) cp5.getController(name);
 		}
@@ -156,23 +162,54 @@ public class Displayer
 		.setCaptionLabel("lista de portas")
 		.setColorBackground(color(60))
 		.setColorActive(color(255, 128))
-		
+		.setId(30)
 		;
 		ddl.getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
 		//ddl = (DropdownList) cp5.getController("listaPortas");
 	}
 
-	public void encherDDL(String[] lista)
+	private void encherDDL(String[] lista)
 	{
 		ddl.clear();
 		int i = 0;
 		ddl.addItems(lista);
-		println("comunicacao interrompida");
-		/*for (String s : lista) {
-			ddl.addItem(s,i);
-			//println(s);
+
+	}
+
+	public void checarTabPotas(ArduinoCOM arduinoCom)
+	{
+		if(tabP.isActive())
+			encherDDL(arduinoCom.getListaPortas());
+	}
+
+	public void updateFeedbacksDig(int[] dado, int[] soma)
+	{
+		int i = 0;
+		for (Numberbox nbd : nbb_dig)
+		{
+			nbd.setValue(soma[i]);
+
+			if(dado[i] > 0)
+				nbd.setColorBackground(color(200,150,0));
+			else
+				nbd.setColorBackground(color(0,0,0));
 			i++;
-		}*/
+		}
+	}
+
+	public void updateFeedbacksAna(int[] dado, int[] soma)
+	{
+		int i = 0;
+		for (Numberbox nba : nbb_ana)
+		{
+			nba.setValue(soma[i]);
+
+			if(dado[i] > 300)
+				nba.setColorBackground(color(200,150,0));
+			else
+				nba.setColorBackground(color(0,0,0));
+			i++;
+		}
 	}
 	
 }

@@ -34,19 +34,30 @@ public class ArduinoCOM
 	{
 		try
 		{
-			arduino = new Arduino(dad, serial, 57600);
-			definirModosPortas();
-			println("conexao com: " + serial + " bem sucedida");
-			this.conectado = true;
-			
+			//arduino.stop();
 		}
-		catch (Exception e)
+		catch (Exception e){println(e.getMessage());}
+		finally{this.conectado = false;}
+
+		try
 		{
-			println(e.getMessage());
-			this.conectado = false;
+			arduino = new Arduino(dad, serial, 57600);
+			
+			//delay(2000);
+			
+			try { definirModosPortas(); }
+			catch (Exception e) { println(e.getMessage()); }
+			
+			println("conexao com: " + serial + " bem sucedida");
+			this.conectado = true;		
 		}
+
+		catch (Exception e){println(e.getMessage());}
+		
 		finally
 		{
+			if(conectado) this.COM = serial;
+			else this.COM = "null";
 			return this.conectado;
 		}
 	}
@@ -125,39 +136,44 @@ public class ArduinoCOM
 	}
 
 	//realiza a leitura de todas as portas analogicas
-	public void leituraInternaAna()
+	public int[] leituraInternaAna()
 	{
-		//não le nada em caso de falha na conexão
-		if(!conectado)return;
-
 		int len = qtd_entradas_ana;
+		int[] temp = new int[len];
+
+		//for (int i : temp) {i = 0;}
+
 		for (int i = 0; i < len; ++i)
-		{
-			int temp = arduino.analogRead(entrada_ana[i]);
-			dados_ana[i] += temp;
+		{println("ana--len: " + len + ", i: " + i);
+			temp[i] = conectado ? arduino.analogRead(entrada_ana[i]) : 0;
+			dados_ana[i] += temp[i];
 		}
+		return temp;
 	}
 
 	//raliza a leitura de todas as ortas digitais
-	public void leituraInternaDig()
+	public int[] leituraInternaDig()
 	{
-		//não le nada em caso de falha na conexão
-		if(!conectado)return;
-
 		int len = qtd_entradas_dig;
+		int[] temp = new int[len];
+
+		//for (int i : temp) {i = 0;}
+
 		for (int i = 0; i < len; ++i)
-		{
-			int temp = arduino.digitalRead(entrada_dig[i]);
-			dados_ana[i] += temp;
+		{println("dig--len: " + len + ", i: " + i);
+			temp[i] = conectado ? arduino.digitalRead(entrada_dig[i]) : 0;
+			dados_dig[i] += temp[i];
 		}
+
+		return temp;
 	}
 
 	//retorna um array com todos os analogicos salvos
-	int[] getDadosAna()
+	public int[] getDadosAna()
 	{return this.dados_ana;}
 
 	//retorna um array com todos os digitais salvos
-	int[] getDadosDig()
+	public int[] getDadosDig()
 	{return this.dados_dig;}
 
 	//retorna um array com todos os pinos setaos como saidas digitais
@@ -173,10 +189,22 @@ public class ArduinoCOM
 	{return this.entrada_dig;}
 
 	public String[] getListaPortas()
-	{
-		//println(Arduino.list());
-		return Arduino.list();
-	}
+	{return Arduino.list();}
 
+	public boolean isConectado()
+	{return this.conectado;}
+
+	public String getCOM()
+	{return this.COM;}
+
+	public void debug()
+	{
+		arduino.pinMode(13,Arduino.OUTPUT);
+	}
+	public void debug(int val)
+	{
+		arduino.digitalWrite(13,val);
+	}
+	
 }
 
