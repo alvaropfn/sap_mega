@@ -33,7 +33,6 @@ public class Displayer
 		addJanelaAquisicao(cp5);
 
 		addDropdownList(cp5);
-
 	}
 
 	private void addTabs(ControlP5 cp5)
@@ -61,9 +60,9 @@ public class Displayer
 		.setPosition(565, 150)
 		.setSize(100, 50)
 		.setColorBackground(color(255,0,0))
+		.setId(100)
 		.getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER)
 		.setColor(color(255,255,255))
-		//.setId(10)
 		;
 		setButton = (Button) cp5.getController("set");
 	}
@@ -73,7 +72,7 @@ public class Displayer
 		cp5.addNumberbox("janelaAquisicao")
 		.setPosition(700,150)
 		.setSize(50,50)
-		.setValue(300)
+		//.setValue(300)
 		.setRange(5, 3600)
 		.setDecimalPrecision(0)
 		.setLabel("tamanho da Janela")
@@ -91,7 +90,7 @@ public class Displayer
 
 		vet = arduinoCom.getSaidasDig();
 		len = vet.length;
-		
+
 		inputBlocks = new InputBlock[len];
 		int ajusteX_tfd = 130;
 		//cria um bloco de controle de enrada para configurar cada saida digital
@@ -173,7 +172,6 @@ public class Displayer
 		ddl.clear();
 		int i = 0;
 		ddl.addItems(lista);
-
 	}
 
 	public void checarTabPotas(ArduinoCOM arduinoCom)
@@ -210,6 +208,17 @@ public class Displayer
 				nba.setColorBackground(color(0,0,0));
 			i++;
 		}
+	}
+
+	public void carregarConf(Configurator configurador)
+	{
+		for (int i = 0; i < 6; ++i)
+		{
+			inputBlocks[i].setEstado(configurador, i);
+			inputBlocks[i].setHMSC(configurador, i);
+			inputBlocks[i].setHMSE(configurador, i);
+		}
+		janelaAquisicao.setValue(configurador.getJanelaAquisicao());
 	}
 	
 }

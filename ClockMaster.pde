@@ -10,14 +10,15 @@ public class ClockMaster
 	private final int qtd_entradas_ana = 16;
 	private final int qtd_entradas_dig = 46;
 	
-	ClockConf[] gears;
+	ClockConf[] clockConfs;
 
 	public ClockMaster()
 	{
+		clockConfs = new ClockConf[qtd_saidas_dig];
 
 		sdf = new SimpleDateFormat("yyyy/MM/dd");
 		hms = new SimpleDateFormat("HH:mm:ss");
-		gears = new ClockConf[qtd_saidas_dig];
+		
 		sec = segundo();
 		contador = 0;
 	}
@@ -50,10 +51,20 @@ public class ClockMaster
 				contador = 0;
 
 			}
-			println("sec: "+sec);
 
 		}
+	}
 
+	public void carregarConf(Configurator configurador)
+	{
+		clockConfs = new ClockConf[qtd_saidas_dig];
+
+		for (int i = 0; i < qtd_saidas_dig; ++i)
+		{
+			clockConfs[i] = new ClockConf(configurador, i);
+			clockConfs[i].atualizar();
+			clockConfs[i].checar();
+		}
 	}
 
 	public String getSDF()

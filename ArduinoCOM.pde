@@ -199,13 +199,10 @@ public class ArduinoCOM
 	{return this.COM;}
 
 	public void debug()
-	{
-		arduino.pinMode(13,Arduino.OUTPUT);
-	}
+	{arduino.pinMode(13,Arduino.OUTPUT);}
+
 	public void debug(int val)
-	{
-		arduino.digitalWrite(13,val);
-	}
+	{arduino.digitalWrite(13,val);}
 	
 }
 

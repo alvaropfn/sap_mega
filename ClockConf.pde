@@ -7,21 +7,10 @@ public class ClockConf
 	int hrc, minc, segc;
 	int hre, mine, sege;
 
-	public ClockConf(int hrc, int minc, int segc, int hre, int mine, int sege)
+	public ClockConf(Configurator configurator, int index)
 	{
 		claro = false;
-		carregarConf(hrc, minc, segc, hre, mine, sege);
-	}
-
-	public void carregarConf(int hrc, int minc, int segc, int hre, int mine, int sege)
-	{
-		this.hrc = hrc;
-		this.minc = minc;
-		this.segc = segc;
-
-		this.hre = hre;
-		this.mine = mine;
-		this.sege = sege;
+		carregarConf(configurator, index);
 	}
 
 	public void carregarConf(Configurator configurador, int index)
@@ -73,6 +62,5 @@ public class ClockConf
 		}
 		return this.claro;
 	}
-
 
 }

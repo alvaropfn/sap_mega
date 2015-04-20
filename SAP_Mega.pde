@@ -7,6 +7,11 @@ Displayer displayer;
 ClockMaster relogio;
 Configurator configurador;
 int seg, nxt;
+
+final int qtd_saidas_dig = 6;
+final int qtd_entradas_ana = 16;
+final int qtd_entradas_dig = 46;
+
 void setup()
 {
 	size(800, 600);
@@ -19,8 +24,10 @@ void setup()
 	configurador = new Configurator(escritor);
 
 	arduinoCom = new ArduinoCOM(this);
+	
 	displayer = new Displayer(cp5, arduinoCom);
-	//displayer.encherDDL(arduinoCom.getListaPortas());
+	displayer.carregarConf(configurador);
+
 	relogio = new ClockMaster();
 
 
@@ -95,6 +102,21 @@ public void controlEvent(ControlEvent evento)
 	if(evento.isController())
 	{
 		//println("controlador: " + evento.getName());
+		//evento.getController();
+
+		
+		int id = evento.getId();
+
+		//eh um botao de estado das saidas digitais
+		if(id > 100 && id <= 110)
+		{
+			String name = evento.toString();
+			//Button tempB = (Button) evento.getController(name);
+		}
+		//eh o botao setButton
+		//if(id == 100)
 	}
 
 }
+//aquele amarelo
+//color(200,150,0)

@@ -16,6 +16,7 @@ public class InputBlock
 	private final int larguraTFD = 20;
 	private final int alturaNBB_TFD = 15;
 
+	private boolean estado;
 	private int inicioX;
 	private int inicioY;
 	private int pin;
@@ -37,7 +38,6 @@ public class InputBlock
 			.setPosition(inicioX, inicioY)
 			.setSize(btnLado, btnLado)
 			.setColorBackground(color(0,0,0))
-			//.setColor(color(255,0,0))
 			.setId(100 + pin)
 			.getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER)
 			;
@@ -98,29 +98,51 @@ public class InputBlock
 			}
 		}
 	}
-
-	/*retorna um array com os inteiros hora minuto e segundo do inicio
-	* 0 = claro
-	* 1 = escuro
-	*/
-	public int[] getHMS(int index)
-	{
-		int hr = Integer.parseInt(this.tfdBlock[index][0].getText());
-		int min = Integer.parseInt(this.tfdBlock[index][1].getText());
-		int seg = Integer.parseInt(this.tfdBlock[index][2].getText());
-		return new int[] {hr, min, seg};
-	}
 	
-	/*salva a hora minuto e segundo de interesse
-	* 0 = claro
-	* 1 = escuro
-	*/
-	public void setHMS(int index, int[] hms)
+	public int getHoraC()
+	{return Integer.parseInt(this.tfdBlock[0][0].getText());}
+
+	public int getMinC()
+	{return Integer.parseInt(this.tfdBlock[0][1].getText());}
+
+	public int getSegC()
+	{return Integer.parseInt(this.tfdBlock[0][2].getText());}
+
+	public int getHoraE()
+	{return Integer.parseInt(this.tfdBlock[1][0].getText());}
+
+	public int getMinE()
+	{return Integer.parseInt(this.tfdBlock[1][1].getText());}
+
+	public int getSegE()
+	{return Integer.parseInt(this.tfdBlock[1][2].getText());}
+
+	public void setHMSC(Configurator configurador, int index)
 	{
-		int len = tfdBlock[index].length;
-		for (int i = 0; i < len; ++i)
-		{
-			tfdBlock[index][i].setText("" + hms[i]);
-		}
+		tfdBlock[0][0].setText("" + configurador.getHoraC(index));
+		tfdBlock[0][1].setText("" + configurador.getMinC(index));
+		tfdBlock[0][2].setText("" + configurador.getSegC(index));
 	}
+
+	public void setHMSE(Configurator configurador, int index)
+	{
+		tfdBlock[1][0].setText("" + configurador.getHoraE(index));
+		tfdBlock[1][1].setText("" + configurador.getMinE(index));
+		tfdBlock[1][2].setText("" + configurador.getSegE(index));
+	}
+
+	public void trocarEstado()
+	{
+		estado = !estado;
+		pintarEstado();
+	}
+
+	public void setEstado(Configurator configurador, int index)
+	{
+		this.estado = configurador.getSaida(index);
+		pintarEstado();
+	}
+
+	private void pintarEstado()
+	{btn.setColorBackground(estado ? color(100,150,255) : color(0,0,0));}
 }

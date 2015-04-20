@@ -150,6 +150,8 @@ public class Configurator
         return array;
     }
 
+    //################################
+
     //entrada bloco SETs
     public String getSerial()
     {return this.serial;}
